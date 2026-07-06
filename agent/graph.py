@@ -2,9 +2,12 @@
 LangGraph state graph definition — orchestrates the multi-agent pipeline.
 
 Flow: Classify Intent → Retrieve Knowledge → Execute Tools → Generate Response → Reflect
+
+Supports both single-turn (run_agent) and multi-turn (run_agent_with_memory) modes.
 """
 
 import os
+from collections import defaultdict
 
 from langgraph.graph import StateGraph, END
 from openai import OpenAI
@@ -22,6 +25,10 @@ from rag.knowledge_base import ProductKnowledgeBase
 # Lazy initialization
 _client: OpenAI | None = None
 _kb: ProductKnowledgeBase | None = None
+
+# Session memory: session_id → list of {role, content}
+_session_store: dict[str, list[dict]] = defaultdict(list)
+MAX_HISTORY = 20  # keep last 20 messages per session
 
 
 def get_client() -> OpenAI:
@@ -76,10 +83,55 @@ def get_graph():
 
 def run_agent(user_message: str) -> AgentState:
     """
-    Run the full agent pipeline on a user message.
+    Run the full agent pipeline on a single user message.
     Returns the final AgentState with the response and debug info.
     """
     state = AgentState(user_message=user_message)
     graph = get_graph()
     result = graph.invoke(state)
     return result
+
+
+def run_agent_with_memory(user_message: str, session_id: str) -> AgentState:
+    """
+    Run the agent with multi-turn conversation memory.
+
+    Args:
+        user_message: The current user message
+        session_id: Unique session identifier for tracking conversation state
+
+    Returns:
+        AgentState with response and debug info
+
+    How memory works:
+    1. Retrieves past messages for this session_id from _session_store
+    2. Passes chat_history into AgentState so the response generator can reference it
+    3. After generating a response, appends both the user msg and agent reply to the store
+    4. Caps history at MAX_HISTORY entries to prevent unbounded growth
+    """
+    history = _session_store.get(session_id, [])
+
+    state = AgentState(
+        user_message=user_message,
+        chat_history=list(history),  # pass a copy to avoid mutation
+    )
+
+    graph = get_graph()
+    result = graph.invoke(state)
+
+    # Update session memory — store the Q&A pair
+    history.append({"role": "user", "content": user_message})
+    history.append({"role": "assistant", "content": result["final_response"]})
+
+    # Trim old history if too long
+    if len(history) > MAX_HISTORY:
+        history = history[-MAX_HISTORY:]
+
+    _session_store[session_id] = history
+
+    return result
+
+
+def clear_session(session_id: str):
+    """Clear conversation history for a session."""
+    _session_store.pop(session_id, None)

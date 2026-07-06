@@ -15,7 +15,7 @@ import streamlit as st
 # Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from agent.graph import run_agent, get_kb
+from agent.graph import run_agent, run_agent_with_memory, clear_session, get_kb
 from utils.mock_apis import lookup_order, track_shipment, check_stock
 
 
@@ -25,6 +25,11 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# Generate a stable session ID for this browser tab
+if "session_id" not in st.session_state:
+    import uuid
+    st.session_state.session_id = str(uuid.uuid4())[:8]
 
 # ---------- Sidebar ----------
 
@@ -84,7 +89,7 @@ with st.sidebar:
             st.write(f"库存: {p['stock']} | 运费: {'包邮' if p['shipping']['free_shipping'] else '$' + str(p['shipping'].get('shipping_cost', '?'))}")
 
     st.markdown("---")
-    st.caption("Built with LangGraph + OpenAI + Chroma + Streamlit")
+    st.caption(f"Session: {st.session_state.session_id} | LangGraph + OpenAI + Chroma + Streamlit")
 
 # ---------- Main chat area ----------
 
@@ -131,7 +136,8 @@ if prompt := st.chat_input("请输入你的问题..."):
             status_placeholder.status("正在分析意图...", expanded=False)
 
             start_time = time.time()
-            result = run_agent(prompt)
+            # Use multi-turn memory — pass session_id for conversation continuity
+            result = run_agent_with_memory(prompt, st.session_state.session_id)
             elapsed = time.time() - start_time
 
             final_response = result.get("final_response", "")
@@ -177,4 +183,4 @@ if prompt := st.chat_input("请输入你的问题..."):
 
 # ---------- Footer ----------
 st.markdown("---")
-st.caption("跨境电商智能客服 Agent · LangGraph + RAG + Streamlit · 个人项目")
+st.caption("跨境电商智能客服 Agent · LangGraph + RAG + Streamlit · 多轮对话记忆 | 个人项目")

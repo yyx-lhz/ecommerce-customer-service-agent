@@ -21,7 +21,8 @@ class AgentState:
     """State that flows through the LangGraph pipeline."""
     messages: list[dict] = field(default_factory=list)
     user_message: str = ""
-    intent: str = ""              # product_inquiry, order_status, shipping, return_refund, complaint, other
+    chat_history: list[dict] = field(default_factory=list)  # multi-turn memory
+    intent: str = ""
     tool_calls: list[dict] = field(default_factory=list)
     tool_results: list[dict] = field(default_factory=list)
     rag_context: str = ""
@@ -156,6 +157,9 @@ RESPONSE_GENERATOR_PROMPT = """You are a helpful and professional customer servi
 
 Use the following context to answer the user's question accurately and helpfully.
 
+## Conversation History:
+{chat_history}
+
 ## Retrieved Knowledge Base:
 {rag_context}
 
@@ -169,6 +173,7 @@ Use the following context to answer the user's question accurately and helpfully
 - Be empathetic — cross-border customers care about shipping time and costs
 - Match the language of the user's question (Chinese → reply in Chinese, English → reply in English)
 - If you don't have enough information, be honest about it
+- Refer to previous conversation context when relevant to maintain coherence
 
 User question: {user_message}
 
@@ -182,7 +187,15 @@ def generate_response(state: AgentState, client: OpenAI) -> AgentState:
         indent=2, ensure_ascii=False,
     )
 
+    # Format chat history
+    history_text = ""
+    if state.chat_history:
+        history_text = "\n".join(
+            f"{h['role']}: {h['content']}" for h in state.chat_history[-6:]  # last 3 turns
+        )
+
     prompt = RESPONSE_GENERATOR_PROMPT.format(
+        chat_history=history_text or "(this is the first message in the conversation)",
         rag_context=state.rag_context[:3000],
         tool_results=tool_results_text,
         user_message=state.user_message,
