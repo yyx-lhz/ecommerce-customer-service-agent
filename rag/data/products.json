@@ -1,0 +1,124 @@
+{
+  "products": [
+    {
+      "id": "P001",
+      "name": "Wireless Bluetooth Earbuds Pro",
+      "name_cn": "无线蓝牙耳机 Pro",
+      "category": "Electronics",
+      "price": 29.99,
+      "currency": "USD",
+      "stock": 500,
+      "weight": "0.15kg",
+      "shipping": {
+        "free_shipping": true,
+        "estimated_days": "7-15",
+        "warehouses": ["US", "CN"]
+      },
+      "description": "High-quality wireless earbuds with active noise cancellation, 30-hour battery life, IPX5 waterproof.",
+      "description_cn": "高品质无线耳机，主动降噪，30小时续航，IPX5防水。",
+      "faq": [
+        {"q": "How long does the battery last?", "a": "Up to 30 hours with the charging case, or 6 hours on a single charge."},
+        {"q": "Are these waterproof?", "a": "Yes, IPX5 rated—resistant to sweat and light rain."},
+        {"q": "What's the warranty?", "a": "12-month warranty covering manufacturing defects."},
+        {"q": "电池能用多久？", "a": "配合充电盒最长30小时，单次充电6小时。"}
+      ]
+    },
+    {
+      "id": "P002",
+      "name": "Smart Fitness Watch X200",
+      "name_cn": "智能健身手表 X200",
+      "category": "Wearables",
+      "price": 49.99,
+      "currency": "USD",
+      "stock": 320,
+      "weight": "0.2kg",
+      "shipping": {
+        "free_shipping": false,
+        "shipping_cost": 5.99,
+        "estimated_days": "10-20",
+        "warehouses": ["CN"]
+      },
+      "description": "Fitness tracker with heart rate monitoring, SpO2, GPS tracking, and 14-day battery life.",
+      "description_cn": "健身追踪器，支持心率监测、血氧检测、GPS追踪，14天续航。",
+      "faq": [
+        {"q": "Is it waterproof?", "a": "IP68 rated—suitable for swimming."},
+        {"q": "Does it support iOS and Android?", "a": "Yes, compatible with iOS 13+ and Android 8+."},
+        {"q": "How to return a defective item?", "a": "Contact customer service within 7 days of delivery. Free return shipping for defective items."}
+      ]
+    },
+    {
+      "id": "P003",
+      "name": "Portable Power Bank 20000mAh",
+      "name_cn": "便携充电宝 20000mAh",
+      "category": "Accessories",
+      "price": 19.99,
+      "currency": "USD",
+      "stock": 0,
+      "weight": "0.35kg",
+      "shipping": {
+        "free_shipping": true,
+        "estimated_days": "5-12",
+        "warehouses": ["US", "EU", "CN"]
+      },
+      "description": "20000mAh high-capacity power bank with 65W fast charging, USB-C and USB-A ports.",
+      "description_cn": "20000mAh大容量充电宝，65W快充，USB-C和USB-A双口输出。",
+      "faq": [
+        {"q": "Is it allowed on airplanes?", "a": "Yes, 20000mAh is within the 100Wh airline limit. Must be carried in carry-on luggage."},
+        {"q": "How many times can it charge an iPhone?", "a": "Approximately 4-5 full charges for iPhone 15."}
+      ]
+    },
+    {
+      "id": "P004",
+      "name": "Silk Pillowcase Set (2 pcs)",
+      "name_cn": "真丝枕套套装（2件）",
+      "category": "Home & Living",
+      "price": 24.99,
+      "currency": "USD",
+      "stock": 150,
+      "weight": "0.3kg",
+      "shipping": {
+        "free_shipping": false,
+        "shipping_cost": 4.99,
+        "estimated_days": "8-18",
+        "warehouses": ["CN"]
+      },
+      "description": "100% mulberry silk pillowcases, skin-friendly, hypoallergenic, includes 2 pillowcases.",
+      "description_cn": "100%桑蚕丝枕套，亲肤防过敏，含2个枕套。",
+      "faq": [
+        {"q": "How to wash silk pillowcases?", "a": "Hand wash in cold water with mild detergent, or machine wash on delicate cycle in a mesh bag."},
+        {"q": "What size are they?", "a": "Standard Queen size: 20 x 30 inches (51 x 76 cm)."}
+      ]
+    },
+    {
+      "id": "P005",
+      "name": "LED Ring Light 12-inch",
+      "name_cn": "LED环形补光灯 12英寸",
+      "category": "Electronics",
+      "price": 34.99,
+      "currency": "USD",
+      "stock": 200,
+      "weight": "0.8kg",
+      "shipping": {
+        "free_shipping": true,
+        "estimated_days": "6-14",
+        "warehouses": ["US", "EU"]
+      },
+      "description": "12-inch ring light with tripod stand, 3 color modes, 10 brightness levels, USB powered, ideal for streaming and video calls.",
+      "description_cn": "12英寸环形补光灯含三脚架，3种色温模式，10档亮度调节，USB供电，适合直播和视频通话。",
+      "faq": [
+        {"q": "Does it come with a tripod?", "a": "Yes, includes an adjustable tripod stand (extends from 40cm to 180cm)."},
+        {"q": "Can I use it for Zoom calls?", "a": "Absolutely! The warm light mode is ideal for video conferencing."}
+      ]
+    }
+  ],
+  "return_policy": {
+    "period_days": 30,
+    "conditions": "Items must be unused and in original packaging. Buyer pays return shipping unless item is defective.",
+    "refund_timeline": "Refund processed within 5-7 business days after warehouse receives the return."
+  },
+  "shipping_info": {
+    "carriers": ["YunExpress", "4PX", "DHL", "FedEx"],
+    "free_shipping_threshold": 39.99,
+    "processing_time_days": "1-3"
+  }
+}

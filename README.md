@@ -1,6 +1,9 @@
 # Cross-border Ecommerce Customer Service Agent
 
-An AI application engineering project for a cross-border ecommerce customer service scenario. It demonstrates intent routing, planning, hybrid RAG retrieval, business tool calling, conversation memory, reflection checks, and an evaluation pipeline.
+跨境电商智能客服 Agent 项目，面向商品咨询、订单查询、物流追踪、库存查询、退换货咨询等客服场景。项目包含两套实现痕迹：
+
+- `app/`: 新增的可复现 FastAPI Agent 服务，默认离线可跑，包含 RAG、工具调用、记忆、Reflection 和评测脚本。
+- `agent/`, `rag/`, `utils/`, `api.py`, `app.py`: 原仓库的 LangGraph / Streamlit 演示版本，保留用于展示早期实现思路。
 
 ## Capabilities
 
@@ -11,6 +14,20 @@ An AI application engineering project for a cross-border ecommerce customer serv
 - Conversation memory with in-memory default and optional Redis backend.
 - Docker Compose deployment for API, Redis, Elasticsearch, and Milvus standalone dependencies.
 - Offline evaluation for Intent Accuracy, Tool Accuracy, Recall@5, and Faithfulness.
+
+## Architecture
+
+```text
+Client
+  -> FastAPI /chat
+  -> Intent Router
+  -> Planner
+  -> Hybrid Retriever: local vector + BM25 + RRF
+  -> Tool Executor: order/logistics/inventory/returns
+  -> Response Composer
+  -> Reflection: grounding and tool evidence checks
+  -> Redis or in-memory conversation memory
+```
 
 ## Quick Start
 
@@ -35,6 +52,8 @@ curl -X POST http://localhost:8000/chat \
   -H "Content-Type: application/json" \
   -d '{"session_id":"demo","message":"Can you check my order OD1002?"}'
 ```
+
+The response includes `intent`, `citations`, `tool_calls`, `reflection`, and `trace`, so reviewers can inspect the full reasoning and execution path.
 
 ## Docker Deployment
 
@@ -61,7 +80,7 @@ Run the deterministic offline evaluation:
 python scripts/evaluate.py
 ```
 
-Expected output shape:
+Current expected output:
 
 ```json
 {
@@ -86,22 +105,28 @@ To expand the benchmark, add cases in `data/eval/customer_service_cases.json`. F
 
 ```bash
 pytest
+ruff check app tests scripts
 ```
 
-## Architecture
+Verified locally:
 
 ```text
-Client
-  -> FastAPI /chat
-  -> Intent Router
-  -> Planner
-  -> Hybrid Retriever: local vector + BM25 + RRF
-  -> Tool Executor: order/logistics/inventory/returns
-  -> Response Composer
-  -> Reflection: grounding and tool evidence checks
-  -> Redis or in-memory conversation memory
+4 passed
+intent_accuracy: 1.0
+tool_accuracy: 1.0
+recall_at_5: 1.0
+faithfulness: 1.0
 ```
 
-## Notes
+## Legacy Demo
 
-The default implementation is fully offline so reviewers can run it without API keys. The optional `integrations` dependency group and `.env` settings prepare the project for OpenAI embeddings, Milvus vector storage, and Elasticsearch indexing.
+The previous LangGraph/Streamlit implementation is still available:
+
+```bash
+pip install -r requirements.txt
+export OPENAI_API_KEY="sk-your-key"
+uvicorn api:app --reload --port 8001
+streamlit run app.py
+```
+
+Use the new `app.main:app` service for deterministic local review and evaluation, and the legacy demo when you want to show LLM-powered interactive behavior.

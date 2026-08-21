@@ -1,11 +1,12 @@
+chroma_db/
 __pycache__/
 .pytest_cache/
 .ruff_cache/
 .venv/
 .env
 *.pyc
+*.egg-info/
 data/index/
 logs/
 htmlcov/
 .coverage
-*.egg-info/
