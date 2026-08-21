@@ -32,12 +32,20 @@ class ToolCall(BaseModel):
     arguments: dict[str, Any]
     result: dict[str, Any]
     ok: bool = True
+    attempts: int = 1
+    idempotency_key: str | None = None
+    cached: bool = False
+    error: str | None = None
 
 
 class ChatResponse(BaseModel):
     answer: str
     intent: Intent
     session_id: str
+    trace_id: str
+    case: dict[str, Any] = Field(default_factory=dict)
+    memory: dict[str, Any] = Field(default_factory=dict)
+    observability: dict[str, Any] = Field(default_factory=dict)
     citations: list[Citation] = Field(default_factory=list)
     tool_calls: list[ToolCall] = Field(default_factory=list)
     reflection: dict[str, Any] = Field(default_factory=dict)

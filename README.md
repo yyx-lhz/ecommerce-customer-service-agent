@@ -9,11 +9,14 @@
 
 - FastAPI service with `/chat` and `/health` endpoints.
 - Agent workflow: Intent Router -> Planner -> Hybrid Retriever -> Tool Executor -> Reflection.
+- Customer Service Case workflow with `CREATED`, `ANALYZING`, `WAITING_FOR_INFORMATION`, `EXECUTING`, `COMPLETED`, and `FAILED` states.
 - Business tools for order lookup, logistics tracking, inventory query, and return case creation.
+- Tool reliability layer with schema validation, parameter checks, timeout handling, retries, error handling, and idempotency for side-effect tools.
 - Hybrid retrieval with local vector embedding, BM25 keyword retrieval, and RRF fusion.
-- Conversation memory with in-memory default and optional Redis backend.
+- Structured customer memory for profile, order context, current case, previous actions, and important business facts.
+- Agent trace observability with `trace_id`, selected tools, arguments, results, retrieved documents, and final response.
 - Docker Compose deployment for API, Redis, Elasticsearch, and Milvus standalone dependencies.
-- Offline evaluation for Intent Accuracy, Tool Accuracy, Recall@5, and Faithfulness.
+- Offline evaluation for Intent Accuracy, Tool Selection Accuracy, Tool Argument Accuracy, Task Completion Rate, Recall@5, and Faithfulness.
 
 ## Architecture
 
@@ -22,11 +25,12 @@ Client
   -> FastAPI /chat
   -> Intent Router
   -> Planner
+  -> Case Workflow
   -> Hybrid Retriever: local vector + BM25 + RRF
-  -> Tool Executor: order/logistics/inventory/returns
+  -> Reliable Tool Executor: validation + retry + timeout + idempotency
   -> Response Composer
   -> Reflection: grounding and tool evidence checks
-  -> Redis or in-memory conversation memory
+  -> Structured memory and trace recording
 ```
 
 ## Quick Start
@@ -53,7 +57,7 @@ curl -X POST http://localhost:8000/chat \
   -d '{"session_id":"demo","message":"Can you check my order OD1002?"}'
 ```
 
-The response includes `intent`, `citations`, `tool_calls`, `reflection`, and `trace`, so reviewers can inspect the full reasoning and execution path.
+The response includes `trace_id`, `case`, `memory`, `intent`, `citations`, `tool_calls`, `reflection`, `trace`, and structured `observability` events, so reviewers can inspect the full reasoning and execution path.
 
 ## Docker Deployment
 
@@ -84,9 +88,11 @@ Current expected output:
 
 ```json
 {
-  "case_count": 6,
+  "case_count": 9,
   "intent_accuracy": 1.0,
-  "tool_accuracy": 1.0,
+  "tool_selection_accuracy": 1.0,
+  "tool_argument_accuracy": 1.0,
+  "task_completion_rate": 1.0,
   "recall_at_5": 1.0,
   "faithfulness": 1.0
 }
@@ -95,11 +101,13 @@ Current expected output:
 Metrics:
 
 - `intent_accuracy`: whether the router selected the expected intent.
-- `tool_accuracy`: whether the correct business tool was called or no tool was called when expected.
+- `tool_selection_accuracy`: whether the correct business tool was called or no tool was called when expected.
+- `tool_argument_accuracy`: whether tool arguments such as `order_id` and `tracking_no` match the expected business context.
+- `task_completion_rate`: whether the Customer Service Case reached the expected status.
 - `recall_at_5`: whether the expected policy document appears in top-5 citations.
 - `faithfulness`: whether the reflection module sees enough retrieval/tool evidence for the answer.
 
-To expand the benchmark, add cases in `data/eval/customer_service_cases.json`. For resume-grade reporting, keep the dataset fixed, record the commit SHA, and report metrics from the same command.
+The benchmark in `data/eval/customer_service_cases.json` covers product inquiry, order query, logistics exception, refund request, return request, and multi-turn complex questions. To run regression tests after changing prompt, workflow, or retriever logic, keep the dataset fixed and run `python scripts/evaluate.py`.
 
 ## Tests
 
@@ -111,9 +119,11 @@ ruff check app tests scripts
 Verified locally:
 
 ```text
-4 passed
+11 passed
 intent_accuracy: 1.0
-tool_accuracy: 1.0
+tool_selection_accuracy: 1.0
+tool_argument_accuracy: 1.0
+task_completion_rate: 1.0
 recall_at_5: 1.0
 faithfulness: 1.0
 ```
