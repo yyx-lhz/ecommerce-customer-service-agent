@@ -1,0 +1,44 @@
+[
+  {
+    "id": "intent-order-1",
+    "question": "Can you check my order OD1002?",
+    "expected_intent": "order_query",
+    "expected_tool": "get_order",
+    "expected_source": "order_policy.md"
+  },
+  {
+    "id": "intent-logistics-1",
+    "question": "Where is tracking number TRK9001 now?",
+    "expected_intent": "logistics_tracking",
+    "expected_tool": "track_logistics",
+    "expected_source": "logistics_policy.md"
+  },
+  {
+    "id": "intent-inventory-1",
+    "question": "Is the travel adapter inventory still available?",
+    "expected_intent": "inventory_query",
+    "expected_tool": "check_inventory",
+    "expected_source": "product_policy.md"
+  },
+  {
+    "id": "intent-return-1",
+    "question": "I want to return order OD1001 because I bought the wrong product.",
+    "expected_intent": "return_refund",
+    "expected_tool": "create_return_case",
+    "expected_source": "return_policy.md"
+  },
+  {
+    "id": "rag-policy-1",
+    "question": "How long does refund normally take after warehouse inspection?",
+    "expected_intent": "return_refund",
+    "expected_tool": null,
+    "expected_source": "return_policy.md"
+  },
+  {
+    "id": "rag-logistics-2",
+    "question": "What should support do if tracking has no update for more than 72 hours?",
+    "expected_intent": "logistics_tracking",
+    "expected_tool": null,
+    "expected_source": "logistics_policy.md"
+  }
+]

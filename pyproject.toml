@@ -1,0 +1,39 @@
+[project]
+name = "ecommerce-customer-service-agent"
+version = "0.1.0"
+description = "Cross-border ecommerce customer service Agent with RAG, tool calling, memory, reflection, and evals."
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.3.0",
+    "numpy>=1.26.0",
+    "redis>=5.0.0",
+    "httpx>=0.27.0",
+    "python-dotenv>=1.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.5.0",
+]
+integrations = [
+    "elasticsearch>=8.14.0",
+    "pymilvus>=2.4.4",
+    "openai>=1.40.0",
+    "pymupdf>=1.24.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
