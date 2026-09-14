@@ -1,27 +1,23 @@
-from pathlib import Path
+from fastapi import APIRouter, Request
 
-from fastapi import APIRouter, Depends
-
-from app.agent.workflow import CustomerServiceAgent
-from app.core.config import Settings, get_settings
 from app.core.schemas import ChatRequest, ChatResponse
 
 router = APIRouter()
-SettingsDep = Depends(get_settings)
-
-
-def get_agent(settings: Settings = SettingsDep) -> CustomerServiceAgent:
-    return CustomerServiceAgent(settings=settings, knowledge_dir=Path("data/knowledge"))
-
-
-AgentDep = Depends(get_agent)
 
 
 @router.get("/health")
-def health() -> dict[str, str]:
-    return {"status": "ok"}
+def health(request: Request):
+    return {"status": "ok", "rag_backend": request.app.state.agent.settings.rag_backend}
+
+
+@router.get("/ready")
+def ready(request: Request):
+    agent = request.app.state.agent
+    if agent.settings.rag_backend == "production":
+        agent.retriever.stores.check()
+    return {"status": "ready", "rag_backend": agent.settings.rag_backend}
 
 
 @router.post("/chat", response_model=ChatResponse)
-def chat(request: ChatRequest, agent: CustomerServiceAgent = AgentDep) -> ChatResponse:
-    return agent.chat(request)
+def chat(request: ChatRequest, http_request: Request):
+    return http_request.app.state.agent.chat(request)

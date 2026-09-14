@@ -1,0 +1,422 @@
+{
+  "backend": "local",
+  "case_count": 12,
+  "recall_at_5": 1.0,
+  "label_unit": "source/page; source-only for Markdown",
+  "dataset_sha256": "134246ab35ecb255ff16e4fc62aeedb198aefc7cbe8a395ecbeb642fb4cd22e7",
+  "git_commit": "faafe3b651cbfba20b5ff428b969e19d69d8c808",
+  "working_tree_dirty": true,
+  "index_version": "v1",
+  "embedding_model": "LocalHashEmbedding",
+  "reranker": null,
+  "details": [
+    {
+      "query": "Is water damage covered for AX900?",
+      "recall_at_5": 1.0,
+      "seconds": 0.00011424999684095383,
+      "hits": [
+        {
+          "source": "sample_policies.pdf",
+          "page": 1,
+          "chunk_id": "733cb701191ed2e94f9eb18e18c2f388222745e179d3b6233d62014ac50898f2",
+          "score": 0.03278688524590164
+        },
+        {
+          "source": "return_policy.md",
+          "page": 0,
+          "chunk_id": "332fb3b4da8b486a20df6f30511304837a2664b916247248b2b1ca40204518db",
+          "score": 0.03225806451612903
+        },
+        {
+          "source": "logistics_policy.md",
+          "page": 0,
+          "chunk_id": "0e63905398666880f0e0754302e663155180b5766a6c05ad10f4f50a7dbedbb8",
+          "score": 0.03125763125763126
+        },
+        {
+          "source": "order_policy.md",
+          "page": 0,
+          "chunk_id": "1754d73a3269fc5c9a90a573902f7bc2a3bb9948024159e9474f9fc1c2951173",
+          "score": 0.030330882352941176
+        },
+        {
+          "source": "product_policy.md",
+          "page": 0,
+          "chunk_id": "038b51a490ab6eb294d945c0c958d73e1e6992ac4bcf1c908d7d477b111521f9",
+          "score": 0.030309988518943745
+        }
+      ]
+    },
+    {
+      "query": "Can EB200 be sent by untracked mail?",
+      "recall_at_5": 1.0,
+      "seconds": 8.91660456545651e-05,
+      "hits": [
+        {
+          "source": "sample_policies.pdf",
+          "page": 2,
+          "chunk_id": "c2fa735ea61e5753bf5a5c2845b87cf812e55bae852b23511b5b842462ce95b4",
+          "score": 0.03278688524590164
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 6,
+          "chunk_id": "ca8bf1cb7fcc876197bc5c88b0224c91a8e26aae7d46eb1009b734ca80083f71",
+          "score": 0.03225806451612903
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 4,
+          "chunk_id": "4f0cb4f764842fae33513bd9043cea7990ec796997e0d4be2a7027bf24c86843",
+          "score": 0.03149801587301587
+        },
+        {
+          "source": "order_policy.md",
+          "page": 0,
+          "chunk_id": "1754d73a3269fc5c9a90a573902f7bc2a3bb9948024159e9474f9fc1c2951173",
+          "score": 0.03149801587301587
+        },
+        {
+          "source": "logistics_policy.md",
+          "page": 0,
+          "chunk_id": "0e63905398666880f0e0754302e663155180b5766a6c05ad10f4f50a7dbedbb8",
+          "score": 0.030309988518943745
+        }
+      ]
+    },
+    {
+      "query": "How much does gift wrapping cost?",
+      "recall_at_5": 1.0,
+      "seconds": 5.687499651685357e-05,
+      "hits": [
+        {
+          "source": "sample_policies.pdf",
+          "page": 3,
+          "chunk_id": "ebb50fcf87a8bdaa1061ca22c3ca96ee0483ee19eba8aa790f4148c02f06d068",
+          "score": 0.03278688524590164
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 1,
+          "chunk_id": "733cb701191ed2e94f9eb18e18c2f388222745e179d3b6233d62014ac50898f2",
+          "score": 0.016129032258064516
+        }
+      ]
+    },
+    {
+      "query": "Can I change the destination after dispatch?",
+      "recall_at_5": 1.0,
+      "seconds": 5.8416975662112236e-05,
+      "hits": [
+        {
+          "source": "sample_policies.pdf",
+          "page": 4,
+          "chunk_id": "4f0cb4f764842fae33513bd9043cea7990ec796997e0d4be2a7027bf24c86843",
+          "score": 0.032018442622950824
+        },
+        {
+          "source": "order_policy.md",
+          "page": 0,
+          "chunk_id": "1754d73a3269fc5c9a90a573902f7bc2a3bb9948024159e9474f9fc1c2951173",
+          "score": 0.032018442622950824
+        },
+        {
+          "source": "return_policy.md",
+          "page": 0,
+          "chunk_id": "332fb3b4da8b486a20df6f30511304837a2664b916247248b2b1ca40204518db",
+          "score": 0.03200204813108039
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 7,
+          "chunk_id": "9fb4fea31ea2fc1107d63f3b937ac41319ada7807bbf8c4084a2331d9f9b62bf",
+          "score": 0.0315136476426799
+        },
+        {
+          "source": "logistics_policy.md",
+          "page": 0,
+          "chunk_id": "0e63905398666880f0e0754302e663155180b5766a6c05ad10f4f50a7dbedbb8",
+          "score": 0.031024531024531024
+        }
+      ]
+    },
+    {
+      "query": "When do unused loyalty points expire?",
+      "recall_at_5": 1.0,
+      "seconds": 3.9209029637277126e-05,
+      "hits": [
+        {
+          "source": "sample_policies.pdf",
+          "page": 5,
+          "chunk_id": "72d69c86c3b461b3a7dd92da4c0ec0fea0863458c78d9c3259ffa19d975c5d48",
+          "score": 0.03278688524590164
+        },
+        {
+          "source": "return_policy.md",
+          "page": 0,
+          "chunk_id": "332fb3b4da8b486a20df6f30511304837a2664b916247248b2b1ca40204518db",
+          "score": 0.03225806451612903
+        },
+        {
+          "source": "order_policy.md",
+          "page": 0,
+          "chunk_id": "1754d73a3269fc5c9a90a573902f7bc2a3bb9948024159e9474f9fc1c2951173",
+          "score": 0.031746031746031744
+        }
+      ]
+    },
+    {
+      "query": "Can I stack two promo codes?",
+      "recall_at_5": 1.0,
+      "seconds": 3.866699989885092e-05,
+      "hits": [
+        {
+          "source": "sample_policies.pdf",
+          "page": 6,
+          "chunk_id": "ca8bf1cb7fcc876197bc5c88b0224c91a8e26aae7d46eb1009b734ca80083f71",
+          "score": 0.03278688524590164
+        },
+        {
+          "source": "order_policy.md",
+          "page": 0,
+          "chunk_id": "1754d73a3269fc5c9a90a573902f7bc2a3bb9948024159e9474f9fc1c2951173",
+          "score": 0.031754032258064516
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 4,
+          "chunk_id": "4f0cb4f764842fae33513bd9043cea7990ec796997e0d4be2a7027bf24c86843",
+          "score": 0.031746031746031744
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 1,
+          "chunk_id": "733cb701191ed2e94f9eb18e18c2f388222745e179d3b6233d62014ac50898f2",
+          "score": 0.0315136476426799
+        },
+        {
+          "source": "logistics_policy.md",
+          "page": 0,
+          "chunk_id": "0e63905398666880f0e0754302e663155180b5766a6c05ad10f4f50a7dbedbb8",
+          "score": 0.030309988518943745
+        }
+      ]
+    },
+    {
+      "query": "Where can I download my tax invoice?",
+      "recall_at_5": 1.0,
+      "seconds": 4.5584049075841904e-05,
+      "hits": [
+        {
+          "source": "sample_policies.pdf",
+          "page": 7,
+          "chunk_id": "9fb4fea31ea2fc1107d63f3b937ac41319ada7807bbf8c4084a2331d9f9b62bf",
+          "score": 0.03278688524590164
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 4,
+          "chunk_id": "4f0cb4f764842fae33513bd9043cea7990ec796997e0d4be2a7027bf24c86843",
+          "score": 0.031754032258064516
+        },
+        {
+          "source": "order_policy.md",
+          "page": 0,
+          "chunk_id": "1754d73a3269fc5c9a90a573902f7bc2a3bb9948024159e9474f9fc1c2951173",
+          "score": 0.031754032258064516
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 6,
+          "chunk_id": "ca8bf1cb7fcc876197bc5c88b0224c91a8e26aae7d46eb1009b734ca80083f71",
+          "score": 0.031746031746031744
+        },
+        {
+          "source": "logistics_policy.md",
+          "page": 0,
+          "chunk_id": "0e63905398666880f0e0754302e663155180b5766a6c05ad10f4f50a7dbedbb8",
+          "score": 0.03076923076923077
+        }
+      ]
+    },
+    {
+      "query": "When will a preorder be shipped?",
+      "recall_at_5": 1.0,
+      "seconds": 4.7874986194074154e-05,
+      "hits": [
+        {
+          "source": "order_policy.md",
+          "page": 0,
+          "chunk_id": "1754d73a3269fc5c9a90a573902f7bc2a3bb9948024159e9474f9fc1c2951173",
+          "score": 0.03278688524590164
+        },
+        {
+          "source": "return_policy.md",
+          "page": 0,
+          "chunk_id": "332fb3b4da8b486a20df6f30511304837a2664b916247248b2b1ca40204518db",
+          "score": 0.0315136476426799
+        },
+        {
+          "source": "logistics_policy.md",
+          "page": 0,
+          "chunk_id": "0e63905398666880f0e0754302e663155180b5766a6c05ad10f4f50a7dbedbb8",
+          "score": 0.03149801587301587
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 6,
+          "chunk_id": "ca8bf1cb7fcc876197bc5c88b0224c91a8e26aae7d46eb1009b734ca80083f71",
+          "score": 0.03128054740957967
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 8,
+          "chunk_id": "9c94988acb5455d95cc6ca258d5d0364dc3d54e9312f4ed946511590f5808b47",
+          "score": 0.030798389007344232
+        }
+      ]
+    },
+    {
+      "query": "How long does a refund take after inspection?",
+      "recall_at_5": 1.0,
+      "seconds": 4.187499871477485e-05,
+      "hits": [
+        {
+          "source": "return_policy.md",
+          "page": 0,
+          "chunk_id": "332fb3b4da8b486a20df6f30511304837a2664b916247248b2b1ca40204518db",
+          "score": 0.03278688524590164
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 1,
+          "chunk_id": "733cb701191ed2e94f9eb18e18c2f388222745e179d3b6233d62014ac50898f2",
+          "score": 0.031754032258064516
+        },
+        {
+          "source": "order_policy.md",
+          "page": 0,
+          "chunk_id": "1754d73a3269fc5c9a90a573902f7bc2a3bb9948024159e9474f9fc1c2951173",
+          "score": 0.0315136476426799
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 5,
+          "chunk_id": "72d69c86c3b461b3a7dd92da4c0ec0fea0863458c78d9c3259ffa19d975c5d48",
+          "score": 0.03149801587301587
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 7,
+          "chunk_id": "9fb4fea31ea2fc1107d63f3b937ac41319ada7807bbf8c4084a2331d9f9b62bf",
+          "score": 0.03125763125763126
+        }
+      ]
+    },
+    {
+      "query": "DHL tracking delayed during customs clearance",
+      "recall_at_5": 1.0,
+      "seconds": 3.583298530429602e-05,
+      "hits": [
+        {
+          "source": "logistics_policy.md",
+          "page": 0,
+          "chunk_id": "0e63905398666880f0e0754302e663155180b5766a6c05ad10f4f50a7dbedbb8",
+          "score": 0.03278688524590164
+        },
+        {
+          "source": "product_policy.md",
+          "page": 0,
+          "chunk_id": "038b51a490ab6eb294d945c0c958d73e1e6992ac4bcf1c908d7d477b111521f9",
+          "score": 0.03200204813108039
+        },
+        {
+          "source": "order_policy.md",
+          "page": 0,
+          "chunk_id": "1754d73a3269fc5c9a90a573902f7bc2a3bb9948024159e9474f9fc1c2951173",
+          "score": 0.031754032258064516
+        },
+        {
+          "source": "return_policy.md",
+          "page": 0,
+          "chunk_id": "332fb3b4da8b486a20df6f30511304837a2664b916247248b2b1ca40204518db",
+          "score": 0.03149801587301587
+        }
+      ]
+    },
+    {
+      "query": "Do eight adapters count as low stock?",
+      "recall_at_5": 1.0,
+      "seconds": 3.583304351195693e-05,
+      "hits": [
+        {
+          "source": "product_policy.md",
+          "page": 0,
+          "chunk_id": "038b51a490ab6eb294d945c0c958d73e1e6992ac4bcf1c908d7d477b111521f9",
+          "score": 0.03278688524590164
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 1,
+          "chunk_id": "733cb701191ed2e94f9eb18e18c2f388222745e179d3b6233d62014ac50898f2",
+          "score": 0.03200204813108039
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 4,
+          "chunk_id": "4f0cb4f764842fae33513bd9043cea7990ec796997e0d4be2a7027bf24c86843",
+          "score": 0.016129032258064516
+        },
+        {
+          "source": "order_policy.md",
+          "page": 0,
+          "chunk_id": "1754d73a3269fc5c9a90a573902f7bc2a3bb9948024159e9474f9fc1c2951173",
+          "score": 0.015873015873015872
+        },
+        {
+          "source": "return_policy.md",
+          "page": 0,
+          "chunk_id": "332fb3b4da8b486a20df6f30511304837a2664b916247248b2b1ca40204518db",
+          "score": 0.015625
+        }
+      ]
+    },
+    {
+      "query": "What should I do if the customer omitted the order number?",
+      "recall_at_5": 1.0,
+      "seconds": 4.449998959898949e-05,
+      "hits": [
+        {
+          "source": "order_policy.md",
+          "page": 0,
+          "chunk_id": "1754d73a3269fc5c9a90a573902f7bc2a3bb9948024159e9474f9fc1c2951173",
+          "score": 0.03278688524590164
+        },
+        {
+          "source": "logistics_policy.md",
+          "page": 0,
+          "chunk_id": "0e63905398666880f0e0754302e663155180b5766a6c05ad10f4f50a7dbedbb8",
+          "score": 0.03200204813108039
+        },
+        {
+          "source": "return_policy.md",
+          "page": 0,
+          "chunk_id": "332fb3b4da8b486a20df6f30511304837a2664b916247248b2b1ca40204518db",
+          "score": 0.03200204813108039
+        },
+        {
+          "source": "product_policy.md",
+          "page": 0,
+          "chunk_id": "038b51a490ab6eb294d945c0c958d73e1e6992ac4bcf1c908d7d477b111521f9",
+          "score": 0.03125
+        },
+        {
+          "source": "sample_policies.pdf",
+          "page": 7,
+          "chunk_id": "9fb4fea31ea2fc1107d63f3b937ac41319ada7807bbf8c4084a2331d9f9b62bf",
+          "score": 0.03076923076923077
+        }
+      ]
+    }
+  ]
+}

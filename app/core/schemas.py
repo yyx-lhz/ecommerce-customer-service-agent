@@ -21,6 +21,7 @@ class ChatRequest(BaseModel):
 
 
 class Citation(BaseModel):
+    page: int = 0
     source: str
     chunk_id: str
     score: float

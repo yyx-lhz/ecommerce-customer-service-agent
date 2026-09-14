@@ -18,7 +18,11 @@ class CustomerServiceAgent:
     def __init__(self, settings: Settings, knowledge_dir):
         self.settings = settings
         self.memory = ConversationMemory(settings)
-        self.retriever = HybridRetriever(load_markdown_chunks(knowledge_dir))
+        if settings.rag_backend == "production":
+            from app.rag.production import ProductionRetriever
+            self.retriever = ProductionRetriever(settings)
+        else:
+            self.retriever = HybridRetriever(load_markdown_chunks(knowledge_dir))
         self.tools = BusinessToolExecutor()
 
     def chat(self, request: ChatRequest) -> ChatResponse:
@@ -55,6 +59,7 @@ class CustomerServiceAgent:
             citations=[
                 Citation(
                     source=item.chunk.source,
+                    page=item.chunk.page,
                     chunk_id=item.chunk.chunk_id,
                     score=round(item.score, 4),
                     text=item.chunk.text,

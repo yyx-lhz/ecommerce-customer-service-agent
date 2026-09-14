@@ -9,6 +9,7 @@ class DocumentChunk:
     chunk_id: str
     source: str
     text: str
+    page: int = 0
 
 
 def load_markdown_chunks(path: Path) -> list[DocumentChunk]:

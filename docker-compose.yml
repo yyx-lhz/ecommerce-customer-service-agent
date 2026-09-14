@@ -1,23 +1,52 @@
 services:
   api:
     build: .
-    env_file:
-      - .env
+    environment: &rag-env
+      RAG_BACKEND: production
+      RAG_INDEX_VERSION: ${RAG_INDEX_VERSION:-v1}
+      MILVUS_HOST: milvus
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      REDIS_URL: redis://redis:6379/0
+      USE_REDIS: "true"
+      HF_HOME: /app/.cache/huggingface
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - model-cache:/app/.cache/huggingface
+      - ./data/knowledge:/app/data/knowledge:ro
     depends_on:
       redis:
         condition: service_healthy
       elasticsearch:
         condition: service_healthy
       milvus:
-        condition: service_started
+        condition: service_healthy
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/ready"]
+      interval: 30s
+      timeout: 30s
+      start_period: 300s
+      retries: 5
+
+  ingest:
+    build: .
+    profiles: ["tools"]
+    environment: *rag-env
+    command: ["python", "-m", "scripts.ingest"]
+    volumes:
+      - model-cache:/app/.cache/huggingface
+      - ./data/knowledge:/app/data/knowledge:ro
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      milvus:
+        condition: service_healthy
 
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
@@ -33,7 +62,7 @@ services:
       - xpack.security.enabled=false
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
     ports:
-      - "9200:9200"
+      - "127.0.0.1:9200:9200"
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://localhost:9200 >/dev/null || exit 1"]
       interval: 10s
@@ -49,15 +78,25 @@ services:
       - ETCD_AUTO_COMPACTION_RETENTION=1000
       - ETCD_QUOTA_BACKEND_BYTES=4294967296
       - ETCD_SNAPSHOT_COUNT=50000
+    healthcheck:
+      test: ["CMD", "etcdctl", "endpoint", "health"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
     command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
     volumes:
       - etcd-data:/etcd
 
   minio:
-    image: minio/minio:RELEASE.2024-06-29T01-20-47Z
+    image: quay.io/minio/minio:RELEASE.2024-06-29T01-20-47Z
     environment:
       MINIO_ACCESS_KEY: minioadmin
       MINIO_SECRET_KEY: minioadmin
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
     command: minio server /minio_data
     volumes:
       - minio-data:/minio_data
@@ -69,15 +108,24 @@ services:
       ETCD_ENDPOINTS: etcd:2379
       MINIO_ADDRESS: minio:9000
     ports:
-      - "19530:19530"
-      - "9091:9091"
+      - "127.0.0.1:19530:19530"
+      - "127.0.0.1:9091:9091"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
+      interval: 10s
+      timeout: 5s
+      start_period: 60s
+      retries: 30
     depends_on:
-      - etcd
-      - minio
+      etcd:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
     volumes:
       - milvus-data:/var/lib/milvus
 
 volumes:
+  model-cache:
   redis-data:
   es-data:
   etcd-data:

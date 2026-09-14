@@ -1,0 +1,106 @@
+[
+  {
+    "query": "Is water damage covered for AX900?",
+    "relevant": [
+      {
+        "source": "sample_policies.pdf",
+        "page": 1
+      }
+    ]
+  },
+  {
+    "query": "Can EB200 be sent by untracked mail?",
+    "relevant": [
+      {
+        "source": "sample_policies.pdf",
+        "page": 2
+      }
+    ]
+  },
+  {
+    "query": "How much does gift wrapping cost?",
+    "relevant": [
+      {
+        "source": "sample_policies.pdf",
+        "page": 3
+      }
+    ]
+  },
+  {
+    "query": "Can I change the destination after dispatch?",
+    "relevant": [
+      {
+        "source": "sample_policies.pdf",
+        "page": 4
+      }
+    ]
+  },
+  {
+    "query": "When do unused loyalty points expire?",
+    "relevant": [
+      {
+        "source": "sample_policies.pdf",
+        "page": 5
+      }
+    ]
+  },
+  {
+    "query": "Can I stack two promo codes?",
+    "relevant": [
+      {
+        "source": "sample_policies.pdf",
+        "page": 6
+      }
+    ]
+  },
+  {
+    "query": "Where can I download my tax invoice?",
+    "relevant": [
+      {
+        "source": "sample_policies.pdf",
+        "page": 7
+      }
+    ]
+  },
+  {
+    "query": "When will a preorder be shipped?",
+    "relevant": [
+      {
+        "source": "sample_policies.pdf",
+        "page": 8
+      }
+    ]
+  },
+  {
+    "query": "How long does a refund take after inspection?",
+    "relevant": [
+      {
+        "source": "return_policy.md"
+      }
+    ]
+  },
+  {
+    "query": "DHL tracking delayed during customs clearance",
+    "relevant": [
+      {
+        "source": "logistics_policy.md"
+      }
+    ]
+  },
+  {
+    "query": "Do eight adapters count as low stock?",
+    "relevant": [
+      {
+        "source": "product_policy.md"
+      }
+    ]
+  },
+  {
+    "query": "What should I do if the customer omitted the order number?",
+    "relevant": [
+      {
+        "source": "order_policy.md"
+      }
+    ]
+  }
+]

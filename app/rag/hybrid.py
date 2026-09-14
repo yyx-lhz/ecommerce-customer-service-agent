@@ -19,6 +19,7 @@ class RetrievalResult:
     score: float
     vector_score: float
     bm25_score: float
+    rrf_score: float = 0.0
 
 
 class HybridRetriever:
