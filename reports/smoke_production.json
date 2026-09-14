@@ -1,0 +1,55 @@
+{
+  "answer": "I checked the latest available order data and policy knowledge. Relevant policy: Warranty\n\nAX900 adapters have a two-year warranty. Water damage is excluded. Customer question: Is AX900 water damage covered?",
+  "intent": "policy_qa",
+  "session_id": "demo-session",
+  "citations": [
+    {
+      "page": 1,
+      "source": "sample_policies.pdf",
+      "chunk_id": "733cb701191ed2e94f9eb18e18c2f388222745e179d3b6233d62014ac50898f2",
+      "score": 0.9937,
+      "text": "Warranty\n\nAX900 adapters have a two-year warranty. Water damage is excluded."
+    },
+    {
+      "page": 0,
+      "source": "return_policy.md",
+      "chunk_id": "332fb3b4da8b486a20df6f30511304837a2664b916247248b2b1ca40204518db",
+      "score": 0.0001,
+      "text": "# Return and Refund Policy\n\nCustomers can request a return within 30 days after delivery when the product is unused, complete, and in original packaging.\n\nRefunds are processed after warehouse inspection. The normal refund SLA is 3 to 7 business days after the return package is received.\n\nCross-border orders may require customs documents. If the product is defective or the seller shipped the wrong item, the platform covers return shipping.\n\nFor customer preference returns, the customer may need to pay international return shipping unless a campaign policy says otherwise."
+    },
+    {
+      "page": 0,
+      "source": "product_policy.md",
+      "chunk_id": "038b51a490ab6eb294d945c0c958d73e1e6992ac4bcf1c908d7d477b111521f9",
+      "score": 0.0,
+      "text": "# Product and Inventory Policy\n\nProduct answers should combine catalog facts, stock availability, warehouse location, and shipping constraints.\n\nInventory below 10 units should be described as low stock. Inventory equal to 0 means the item is out of stock and the agent should recommend waiting for restock or choosing an alternative.\n\nElectronic accessories such as adapters and earbuds may have country-specific plug, battery, or customs restrictions.\n\nThe support agent should avoid promising availability unless the inventory tool confirms current stock."
+    },
+    {
+      "page": 0,
+      "source": "order_policy.md",
+      "chunk_id": "1754d73a3269fc5c9a90a573902f7bc2a3bb9948024159e9474f9fc1c2951173",
+      "score": 0.0,
+      "text": "# Order Policy\n\nPaid orders can be packed after payment confirmation. Shipped orders should be answered with the tracking number and carrier status.\n\nRefund pending orders should not be promised as completed refunds until the refund system confirms the final state.\n\nWhen a customer provides an order id, the support agent must call the order tool before answering order status.\n\nIf an order id is missing, the support agent should ask for the order id or the email used at checkout."
+    },
+    {
+      "page": 8,
+      "source": "sample_policies.pdf",
+      "chunk_id": "9c94988acb5455d95cc6ca258d5d0364dc3d54e9312f4ed946511590f5808b47",
+      "score": 0.0,
+      "text": "Preorders\n\nPreorder items ship on their listed release date and may ship separately."
+    }
+  ],
+  "tool_calls": [],
+  "reflection": {
+    "status": "pass",
+    "faithful": true,
+    "retrieval_evidence": 5,
+    "tool_ok": true
+  },
+  "trace": [
+    "intent_router:policy_qa",
+    "planner:retrieve_policy",
+    "retriever:5",
+    "reflection:pass"
+  ]
+}

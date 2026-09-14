@@ -1,0 +1,9 @@
+{
+  "version": "ci",
+  "chunks": 12,
+  "embedding_model": "BAAI/bge-m3",
+  "dimensions": 1024,
+  "chunk_size": 1000,
+  "chunk_overlap": 150,
+  "corpus_sha256": "f5ad306b19785af3c2cf7fd3385b5333634032172b799bc6509472cd432e10be"
+}

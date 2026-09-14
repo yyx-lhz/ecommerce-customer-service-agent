@@ -4,8 +4,8 @@
   "recall_at_5": 1.0,
   "label_unit": "source/page; source-only for Markdown",
   "dataset_sha256": "134246ab35ecb255ff16e4fc62aeedb198aefc7cbe8a395ecbeb642fb4cd22e7",
-  "git_commit": "faafe3b651cbfba20b5ff428b969e19d69d8c808",
-  "working_tree_dirty": true,
+  "git_commit": "1b74381fc4d167698dc3e5754c5a2c79738542ba",
+  "working_tree_dirty": false,
   "index_version": "v1",
   "embedding_model": "LocalHashEmbedding",
   "reranker": null,
@@ -13,7 +13,7 @@
     {
       "query": "Is water damage covered for AX900?",
       "recall_at_5": 1.0,
-      "seconds": 0.00011424999684095383,
+      "seconds": 0.00010424997890368104,
       "hits": [
         {
           "source": "sample_policies.pdf",
@@ -50,7 +50,7 @@
     {
       "query": "Can EB200 be sent by untracked mail?",
       "recall_at_5": 1.0,
-      "seconds": 8.91660456545651e-05,
+      "seconds": 5.5791984777897596e-05,
       "hits": [
         {
           "source": "sample_policies.pdf",
@@ -87,7 +87,7 @@
     {
       "query": "How much does gift wrapping cost?",
       "recall_at_5": 1.0,
-      "seconds": 5.687499651685357e-05,
+      "seconds": 3.904203185811639e-05,
       "hits": [
         {
           "source": "sample_policies.pdf",
@@ -106,7 +106,7 @@
     {
       "query": "Can I change the destination after dispatch?",
       "recall_at_5": 1.0,
-      "seconds": 5.8416975662112236e-05,
+      "seconds": 4.4124957639724016e-05,
       "hits": [
         {
           "source": "sample_policies.pdf",
@@ -143,7 +143,7 @@
     {
       "query": "When do unused loyalty points expire?",
       "recall_at_5": 1.0,
-      "seconds": 3.9209029637277126e-05,
+      "seconds": 3.787496825680137e-05,
       "hits": [
         {
           "source": "sample_policies.pdf",
@@ -168,7 +168,7 @@
     {
       "query": "Can I stack two promo codes?",
       "recall_at_5": 1.0,
-      "seconds": 3.866699989885092e-05,
+      "seconds": 3.9083999581635e-05,
       "hits": [
         {
           "source": "sample_policies.pdf",
@@ -205,7 +205,7 @@
     {
       "query": "Where can I download my tax invoice?",
       "recall_at_5": 1.0,
-      "seconds": 4.5584049075841904e-05,
+      "seconds": 3.887503407895565e-05,
       "hits": [
         {
           "source": "sample_policies.pdf",
@@ -242,7 +242,7 @@
     {
       "query": "When will a preorder be shipped?",
       "recall_at_5": 1.0,
-      "seconds": 4.7874986194074154e-05,
+      "seconds": 4.120898665860295e-05,
       "hits": [
         {
           "source": "order_policy.md",
@@ -279,7 +279,7 @@
     {
       "query": "How long does a refund take after inspection?",
       "recall_at_5": 1.0,
-      "seconds": 4.187499871477485e-05,
+      "seconds": 4.108302528038621e-05,
       "hits": [
         {
           "source": "return_policy.md",
@@ -316,7 +316,7 @@
     {
       "query": "DHL tracking delayed during customs clearance",
       "recall_at_5": 1.0,
-      "seconds": 3.583298530429602e-05,
+      "seconds": 3.595795715227723e-05,
       "hits": [
         {
           "source": "logistics_policy.md",
@@ -347,7 +347,7 @@
     {
       "query": "Do eight adapters count as low stock?",
       "recall_at_5": 1.0,
-      "seconds": 3.583304351195693e-05,
+      "seconds": 3.370898775756359e-05,
       "hits": [
         {
           "source": "product_policy.md",
@@ -384,7 +384,7 @@
     {
       "query": "What should I do if the customer omitted the order number?",
       "recall_at_5": 1.0,
-      "seconds": 4.449998959898949e-05,
+      "seconds": 4.137499490752816e-05,
       "hits": [
         {
           "source": "order_policy.md",
