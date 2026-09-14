@@ -27,9 +27,13 @@ class ProductionRetriever:
 
         self.s = settings
         self.stores = stores or SearchStores(settings)
-        self.stores.check()
-        self.embedder = embedder or BGEEmbedding(settings)
-        self.reranker = reranker or BGEReranker(settings)
+        try:
+            self.stores.check()
+            self.embedder = embedder or BGEEmbedding(settings)
+            self.reranker = reranker or BGEReranker(settings)
+        except Exception:
+            self.stores.close()
+            raise
 
     def search(self, query, top_k=5):
         if top_k <= 0 or not query.strip():

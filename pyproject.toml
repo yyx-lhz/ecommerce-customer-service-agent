@@ -1,6 +1,6 @@
 [project]
 name = "ecommerce-customer-service-agent"
-version = "0.1.0"
+version = "0.2.0"
 description = "Cross-border ecommerce customer service Agent with RAG, tool calling, memory, reflection, and evals."
 requires-python = ">=3.11"
 dependencies = [

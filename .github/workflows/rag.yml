@@ -20,6 +20,13 @@ jobs:
       - run: ruff check app tests scripts
       - run: python -m compileall -q app scripts
       - run: docker compose config --quiet
+  image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t ecommerce-rag:test .
+      - run: docker run --rm -e RAG_BACKEND=local ecommerce-rag:test python -c "from app.main import app; from app.rag.models import BGEEmbedding; from pymilvus import MilvusClient; print('Image imports OK')"
   integration:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest

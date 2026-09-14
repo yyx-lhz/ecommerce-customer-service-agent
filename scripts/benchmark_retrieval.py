@@ -68,7 +68,11 @@ def main():
             "label_unit": "source/page; source-only for Markdown",
             "dataset_sha256": hashlib.sha256(args.cases.read_bytes()).hexdigest(),
             "git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
-            "working_tree_dirty": bool(subprocess.check_output(["git", "status", "--porcelain"])),
+            "working_tree_dirty": bool(
+                subprocess.check_output(
+                    ["git", "status", "--porcelain", "--", ".", ":(exclude)reports"]
+                )
+            ),
             "index_version": s.rag_index_version,
             "embedding_model": s.embedding_model
             if args.backend == "production"

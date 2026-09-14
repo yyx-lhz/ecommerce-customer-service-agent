@@ -98,7 +98,9 @@ class SearchStores:
         )
 
     def check(self):
-        self.sparse.cluster.health(wait_for_status="yellow", timeout="20s")
+        health = self.sparse.cluster.health(wait_for_status="yellow", timeout="20s")
+        if health.get("timed_out") or health.get("status") == "red":
+            raise RuntimeError("Elasticsearch cluster is not ready")
         if not self.dense.has_collection(self.s.milvus_collection):
             raise RuntimeError("Milvus index missing; run ingestion")
         meta = self.sparse.indices.get_mapping(index=self.s.elasticsearch_index)[
@@ -110,13 +112,13 @@ class SearchStores:
             or meta.get("model_max_length") != self.s.model_max_length
         ):
             raise RuntimeError("Incomplete ingestion or embedding configuration mismatch")
+        self.dense.load_collection(self.s.milvus_collection)
         count = self.sparse.count(index=self.s.elasticsearch_index)["count"]
         dense_count = self.dense.query(
             self.s.milvus_collection, filter="", output_fields=["count(*)"]
         )[0]["count(*)"]
         if not count or count != dense_count:
             raise RuntimeError("Empty/inconsistent indices; use a completed ingestion version")
-        self.dense.load_collection(self.s.milvus_collection)
 
     def dense_search(self, vector, limit):
         hits = self.dense.search(

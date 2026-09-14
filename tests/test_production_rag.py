@@ -94,3 +94,64 @@ def test_local_api_lifespan_and_memory(monkeypatch):
 
 def test_fixture_has_more_than_five_candidates():
     assert len(load_chunks(Path("data/knowledge"))) > 5
+
+
+def configured_stores():
+    from app.rag.stores import SearchStores
+
+    stores = SearchStores.__new__(SearchStores)
+    stores.s = Settings(_env_file=None)
+    stores.dense, stores.sparse = Mock(), Mock()
+    stores.sparse.cluster.health.return_value = {"status": "yellow", "timed_out": False}
+    stores.dense.has_collection.return_value = True
+    stores.sparse.indices.get_mapping.return_value = {
+        "knowledge_v1": {
+            "mappings": {
+                "_meta": {
+                    "complete": True,
+                    "embedding_model": stores.s.embedding_model,
+                    "model_max_length": stores.s.model_max_length,
+                }
+            }
+        }
+    }
+    stores.sparse.count.return_value = {"count": 12}
+    stores.dense.query.return_value = [{"count(*)": 12}]
+    return stores
+
+
+def test_readiness_rejects_partial_and_model_mismatch():
+    stores = configured_stores()
+    stores.check()
+    stores.dense.load_collection.assert_called_once_with("knowledge_v1")
+    meta = stores.sparse.indices.get_mapping.return_value["knowledge_v1"]["mappings"]["_meta"]
+    meta["complete"] = False
+    with pytest.raises(RuntimeError, match="Incomplete"):
+        stores.check()
+    meta["complete"] = True
+    meta["embedding_model"] = "other-model"
+    with pytest.raises(RuntimeError, match="configuration mismatch"):
+        stores.check()
+
+
+def test_readiness_rejects_count_mismatch_and_unhealthy_cluster():
+    stores = configured_stores()
+    stores.dense.query.return_value = [{"count(*)": 11}]
+    with pytest.raises(RuntimeError, match="inconsistent"):
+        stores.check()
+    stores.sparse.cluster.health.return_value = {"status": "red", "timed_out": True}
+    with pytest.raises(RuntimeError, match="not ready"):
+        stores.check()
+
+
+def test_store_search_payload_and_metadata():
+    stores = configured_stores()
+    row = {"chunk_id": "a", "source": "p.pdf", "page": 2, "text": "policy"}
+    stores.dense.search.return_value = [[{"entity": row, "distance": -0.3}]]
+    result = stores.dense_search(np.ones(3), 20)
+    assert result[0][0].page == 2
+    assert result[0][1] == -0.3
+    assert stores.dense.search.call_args.kwargs["search_params"]["metric_type"] == "COSINE"
+    stores.sparse.search.return_value = {"hits": {"hits": [{"_source": row, "_score": 2.4}]}}
+    assert stores.sparse_search("policy", 20)[0][1] == 2.4
+    assert stores.sparse.search.call_args.kwargs["query"] == {"match": {"text": "policy"}}

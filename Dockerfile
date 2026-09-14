@@ -7,9 +7,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 COPY . .
-RUN pip install --no-cache-dir ".[integrations,dev]"
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu \
+    && pip install --no-cache-dir ".[integrations]"
 
-RUN useradd -m -u 1000 agent && chown -R agent:agent /app
+RUN useradd -m -u 1000 agent \
+    && mkdir -p /app/.cache/huggingface /app/reports \
+    && chown -R agent:agent /app
 USER agent
 
 EXPOSE 8000
