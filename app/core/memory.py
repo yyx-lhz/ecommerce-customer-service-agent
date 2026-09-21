@@ -4,7 +4,10 @@ import json
 from dataclasses import asdict, dataclass
 from typing import Any
 
-import redis
+try:
+    import redis
+except ImportError:  # Redis is optional in the default in-memory mode.
+    redis = None
 
 from app.core.config import Settings
 
@@ -41,6 +44,8 @@ class ConversationMemory:
         self._structured_local: dict[str, StructuredCustomerMemory] = {}
         self._redis = None
         if settings.use_redis:
+            if redis is None:
+                raise RuntimeError("USE_REDIS=true requires the optional redis package")
             self._redis = redis.from_url(settings.redis_url, decode_responses=True)
 
     def load(self, session_id: str, limit: int = 8) -> list[Message]:
@@ -71,7 +76,11 @@ class ConversationMemory:
     def save_structured(self, session_id: str, memory: StructuredCustomerMemory) -> None:
         if self._redis:
             key = self._structured_key(session_id)
-            self._redis.set(key, json.dumps(asdict(memory), ensure_ascii=False), ex=60 * 60 * 24 * 7)
+            self._redis.set(
+                key,
+                json.dumps(asdict(memory), ensure_ascii=False),
+                ex=60 * 60 * 24 * 7,
+            )
             return
         self._structured_local[session_id] = memory
 

@@ -1,0 +1,5 @@
+[
+  {"id":"rfq-tote","text":"We are looking for cotton canvas tote bags. Please quote USD 2.00 for 1,000 pcs shipping to Australia, FOB.","expected":{"product_type":"cotton canvas tote bags","quantity":1000,"country_or_region":"Australia","target_price":2.0,"intent":"rfq","sku":"BAG-TOTE-CAN","status":"ready_for_reply"}},
+  {"id":"rfq-bottle","text":"Need 500 pcs stainless steel bottles shipping to Canada. Please send your quotation.","expected":{"quantity":500,"country_or_region":"Canada","intent":"rfq","sku":"BTL-750-SS","status":"ready_for_reply"}},
+  {"id":"clarification","text":"Could you send me your catalog for mugs?","expected":{"intent":"catalog_request","status":"waiting_for_information"}}
+]

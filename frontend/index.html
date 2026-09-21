@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AI-powered foreign trade inquiry processing workspace" />
+    <title>TradeFlow AI · Inquiry Desk</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <header class="topbar">
+      <a class="brand" href="/ui/" aria-label="TradeFlow AI home">
+        <span class="brand-mark" aria-hidden="true">TF</span>
+        <span><strong>TradeFlow</strong><small>AI inquiry desk</small></span>
+      </a>
+      <div class="topbar-actions">
+        <span class="health"><i></i> Agent online</span>
+        <a class="api-link" href="/docs" target="_blank" rel="noreferrer">API Docs <span>↗</span></a>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="intro">
+        <div>
+          <span class="eyebrow">FOREIGN TRADE COPILOT</span>
+          <h1>Turn a buyer inquiry into an <em>actionable quote.</em></h1>
+          <p>Extract requirements, detect missing details, match products, verify business data, and draft a professional reply in one controlled workflow.</p>
+        </div>
+        <div class="workflow-strip" aria-label="Agent workflow">
+          <span class="active">01 Understand</span><b>→</b><span>02 Validate</span><b>→</b><span>03 Match</span><b>→</b><span>04 Reply</span>
+        </div>
+      </section>
+
+      <section class="dashboard">
+        <aside class="composer panel">
+          <div class="panel-heading">
+            <div><span class="section-number">01</span><h2>Buyer inquiry</h2></div>
+            <button class="text-button" id="loadSample" type="button">Load sample</button>
+          </div>
+
+          <form id="inquiryForm">
+            <label for="source">Message source</label>
+            <div class="source-tabs" role="group" aria-label="Message source">
+              <button class="source-tab selected" type="button" data-source="email">Email</button>
+              <button class="source-tab" type="button" data-source="marketplace">Marketplace</button>
+              <button class="source-tab" type="button" data-source="whatsapp">WhatsApp</button>
+            </div>
+
+            <label for="inquiryText">Original message</label>
+            <div class="textarea-wrap">
+              <textarea id="inquiryText" required maxlength="20000" placeholder="Paste an overseas buyer's email or platform message here..."></textarea>
+              <span id="charCount">0 / 20,000</span>
+            </div>
+
+            <div class="field-row">
+              <div>
+                <label for="customerName">Customer name <span>Optional</span></label>
+                <input id="customerName" type="text" placeholder="Alex Morgan" />
+              </div>
+              <div>
+                <label for="customerEmail">Email <span>Optional</span></label>
+                <input id="customerEmail" type="email" placeholder="alex@company.com" />
+              </div>
+            </div>
+
+            <button class="primary-button" id="processButton" type="submit">
+              <span>Process inquiry</span><i aria-hidden="true">→</i>
+            </button>
+          </form>
+
+          <div class="privacy-note"><span>◇</span> Raw messages are preserved for traceability.</div>
+        </aside>
+
+        <section class="results panel" aria-live="polite">
+          <div class="result-header">
+            <div><span class="section-number">02</span><h2>Agent workspace</h2></div>
+            <span class="status-pill idle" id="statusPill">Awaiting inquiry</span>
+          </div>
+
+          <div class="empty-state" id="emptyState">
+            <div class="orbit"><span></span><i></i><b></b></div>
+            <h3>Ready to analyse your next inquiry</h3>
+            <p>Submit a buyer message to see every decision, retrieval result, and business tool call.</p>
+          </div>
+
+          <div class="loading-state hidden" id="loadingState">
+            <div class="loader-ring"></div>
+            <h3 id="loadingTitle">Understanding buyer requirements…</h3>
+            <div class="loading-steps">
+              <span class="done">Parse</span><span>Validate</span><span>Retrieve</span><span>Draft</span>
+            </div>
+          </div>
+
+          <div class="error-state hidden" id="errorState">
+            <span>!</span><div><h3>Processing failed</h3><p id="errorMessage"></p></div>
+          </div>
+
+          <div class="result-content hidden" id="resultContent">
+            <section class="result-section">
+              <div class="result-title"><h3>Structured requirements</h3><span id="inquiryId"></span></div>
+              <div class="requirement-grid" id="requirementGrid"></div>
+            </section>
+
+            <section class="result-section" id="clarificationSection">
+              <div class="result-title"><h3>Completeness check</h3><span id="completenessBadge"></span></div>
+              <div id="clarificationBody"></div>
+            </section>
+
+            <section class="result-section hidden" id="matchSection">
+              <div class="result-title"><h3>Product match</h3><span>Top candidate</span></div>
+              <div class="match-card" id="matchCard"></div>
+              <div class="candidate-list" id="candidateList"></div>
+            </section>
+
+            <section class="result-section hidden" id="toolsSection">
+              <div class="result-title"><h3>Verified business data</h3><span>Tool outputs</span></div>
+              <div class="tool-grid" id="toolGrid"></div>
+            </section>
+
+            <section class="result-section reply-section">
+              <div class="result-title"><h3>Reply draft</h3><button class="copy-button" id="copyReply" type="button">Copy reply</button></div>
+              <textarea id="replyDraft" aria-label="Generated reply draft"></textarea>
+            </section>
+
+            <section class="result-section trace-section">
+              <div class="result-title"><h3>Execution trace</h3><span>LangGraph</span></div>
+              <div class="trace-list" id="traceList"></div>
+            </section>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer><span>TradeFlow AI</span><p>Human-reviewed automation for global sales teams.</p></footer>
+    <script src="./app.js"></script>
+  </body>
+</html>

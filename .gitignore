@@ -10,3 +10,5 @@ data/index/
 logs/
 htmlcov/
 .coverage
+.DS_Store
+tmp/

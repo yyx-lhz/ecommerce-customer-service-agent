@@ -140,3 +140,52 @@ streamlit run app.py
 ```
 
 Use the new `app.main:app` service for deterministic local review and evaluation, and the legacy demo when you want to show LLM-powered interactive behavior.
+
+## Foreign-trade Inquiry Processing Agent
+
+The new `app/inquiry/` module implements the complete RFQ path independently of
+the legacy customer-service Agent:
+
+Open the visual inquiry workspace at `http://localhost:8000/ui/`. It presents
+the complete data chain on one screen: raw buyer message, structured fields,
+completeness decision, Top-K candidates, match rationale, verified business
+tool outputs, English reply draft, and execution trace.
+
+```text
+Inquiry Input -> Inquiry Parser -> Completeness Checker
+  -> Clarification OR Product Retrieval -> Product Matching
+  -> Price / Inventory / Lead Time / Specification tools -> English reply draft
+```
+
+`POST /inquiries` saves an original buyer message. Then call
+`POST /inquiries/{inquiry_id}/process` to run the LangGraph-managed workflow.
+The response contains structured extraction, missing-field questions when
+needed, top retrieval candidates, match reasons, tool results, and an English
+reply draft.
+
+Example:
+
+```bash
+curl -X POST http://localhost:8000/inquiries \
+  -H "Content-Type: application/json" \
+  -d '{"content":"Please quote 1,000 pcs cotton canvas tote bags shipping to Australia, FOB."}'
+
+curl -X POST http://localhost:8000/inquiries/INQUIRY_ID/process
+```
+
+The default parser is a deterministic offline fallback. For OpenAI structured
+output, put these settings in `.env` before starting the API:
+
+```text
+OPENAI_API_KEY=your_key
+INQUIRY_PARSER_PROVIDER=openai
+INQUIRY_PARSER_MODEL=gpt-4o-mini
+```
+
+Products are maintained in `data/inquiry/products.json`; retrieval uses local
+hash embeddings behind a replaceable vector-store interface. The fixed
+benchmark is in `data/eval/inquiry_benchmark.json` and can be run with:
+
+```bash
+python eval/run_inquiry_eval.py
+```

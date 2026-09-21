@@ -6,6 +6,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     app_env: str = "local"
     openai_api_key: str | None = None
+    inquiry_parser_provider: str = "rule"
+    inquiry_parser_model: str = "gpt-4o-mini"
     embedding_provider: str = "local"
     redis_url: str = "redis://localhost:6379/0"
     elasticsearch_url: str = "http://localhost:9200"
